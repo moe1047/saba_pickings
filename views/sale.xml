@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="sale_form_view" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <group>
+                    <group position="inside">
+                        <field name="driver_id"/>
+                        <field name="plate_no"/>
+                    </group>
+                    <group>
+                    </group>
+            </group>
+
+        </field>
+    </record>
+    <act_window id="bulk_confirm_action"
+           name="Confirm Selected"
+           src_model="sale.order"
+            res_model="saba_pickings.bulk_confirm_sale_wizard"
+             key2="client_action_multi"
+              target="new"
+               view_mode="form" multi="True"/>
+       <record id="confirm_wizard__view" model="ir.ui.view">
+           <field name="name">Bulk Sale Confirmation</field>
+           <field name="model">saba_pickings.bulk_confirm_sale_wizard</field>
+           <field name="arch" type="xml">
+               <form>
+                   <group>
+                       <field name="name" readonly='True' string="Requests: - "/>
+
+                   </group>
+                   <footer>
+                       <button name="confirm_sales" string="Confirm sales" type="object" default_focus="1" class="oe_highlight" />
+
+                       <button string="Cancel" class="oe_link" special="cancel" />
+                   </footer>
+               </form>
+           </field>
+       </record>
+</odoo>

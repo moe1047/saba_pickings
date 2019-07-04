@@ -1,0 +1,67 @@
+<odoo>
+  <data>
+
+    <!--Inherit All transfers search view-->
+    <record id="view_stock_picking_inherit_search" model="ir.ui.view">
+      <field name="name">stock.picking.search.expand.filter</field>
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+      <field name="arch" type="xml">
+        <xpath expr="//search" position="inside">
+          <!-- This field will show up on the default filters
+               &lt; is the XML encoding for < and &gt; is the XML encoding for > -->
+               <field name="driver_id"/>
+               <field name="plate_no"/>
+          </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="picking_form_view">
+      <field name="name">stock.picking</field>
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="stock.view_picking_form"/>
+      <field name="arch" type="xml">
+          <header position="inside">
+              <button name="send_sms" string="Send SMS"  type="object" />
+
+
+          </header>
+          <group>
+                <group>
+                </group>
+                <group position="inside">
+                    <field name="driver_id"/>
+                    <field name="plate_no"/>
+                    <field name="branch_id"/>
+                </group>
+          </group>
+      </field>
+    </record>
+    <record id="view_picking_inherit_form1" model="ir.ui.view">
+        <field name="name">stock.picking.extened</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="driver_id"/>
+                <field name="plate_no"/>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="driver_list_action">
+      <field name="name">Driver</field>
+      <field name="res_model">saba_pickings.driver</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+          <p class="oe_view_nocontent_create">Add Driver
+          </p>
+      </field>
+    </record>
+    <menuitem name="Drivers" id="driver_menu"
+      action="driver_list_action"
+      parent="stock.menu_stock_warehouse_mgmt" />
+
+
+
+  </data>
+</odoo>

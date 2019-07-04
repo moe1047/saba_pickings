@@ -1,0 +1,43 @@
+<odoo>
+    <data>
+        <record id="view_move_tree" model="ir.ui.view">
+            <field name="name">stock.move.tree</field>
+            <field name="model">stock.move</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree decoration-muted="state == 'cancel'" decoration-danger="(state not in ('cancel','done')) and date > current_date" string="Moves" create="0">
+                    <field name="date" groups="base.group_no_one"/>
+                    <field name="location_id" groups="stock.group_stock_multi_locations"/>
+                    <field name="location_dest_id" groups="stock.group_stock_multi_locations"/>
+                    <field name="branch_id"/>
+                    <field name="product_id"/>
+                    <field name="product_uom_qty" sum="Total Quantity"/>
+                    <field name="picking_partner_id" string="Customer/Vendor"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="stock_move_action" model="ir.actions.act_window">
+            <field name="name">Stock Moves</field>
+            <field name="res_model">stock.move</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_move_tree"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a stock movement.
+              </p><p>
+                This menu gives you the full traceability of inventory
+                operations on a specific product. You can filter on the product
+                to see all the past or future movements for the product.
+              </p>
+            </field>
+        </record>
+        <menuitem action="stock_move_action"
+            id="saba_custom_stock_move_menu"
+            parent="stock.menu_warehouse_report"
+            sequence="131" name="Item Movements"/>
+
+    </data>
+</odoo>
